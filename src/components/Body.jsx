@@ -15,9 +15,9 @@ const Body = () => {
         done: false,
         id: uuid(),
       };
-
-      setTodos([...todos, newItem]);
-      localStorage.setItem('todos', JSON.stringify([...todos, newItem]));
+      let payload = [...todos, newItem]
+      setTodos(payload);
+      localStoreFunk(payload);
     },
     [todos]
   );
@@ -26,7 +26,7 @@ const Body = () => {
   let deleteItemHandler = (id) => {
     let payload = todos.filter((todo) => todo.id !== id)
     setTodos(payload);
-    localStorage.setItem('todos', JSON.stringify(payload));
+    localStoreFunk(payload);
   };
 
   //done or not done
@@ -39,7 +39,7 @@ const Body = () => {
       }
     })
     setTodos(payload);
-    localStorage.setItem('todos', JSON.stringify(payload));
+    localStoreFunk(payload);
   };
 
   //EDIT TEXT
@@ -52,12 +52,13 @@ const Body = () => {
       }
     })
     setTodos(payload);
-    localStorage.setItem('todos', JSON.stringify(payload));
+    localStoreFunk(payload);
   };
+
+  const localStoreFunk = payload => localStorage.setItem('todos', JSON.stringify(payload));
 
   useEffect(()=>{
     let storagePayload = JSON.parse(localStorage.getItem('todos')) ?? []
-    console.log(storagePayload);
     setTodos(storagePayload)
   },[])
 
