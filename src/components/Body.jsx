@@ -18,12 +18,11 @@ const Body = () => {
 
       setTodos([...todos, newItem]);
       localStorage.setItem('todos', JSON.stringify([...todos, newItem]));
-      // console.log(newItem);
     },
     [todos]
   );
-  // delete items from todos array by id
 
+  // delete items from todos array by id
   let deleteItemHandler = (id) => {
     let payload = todos.filter((todo) => todo.id !== id)
     setTodos(payload);
@@ -32,10 +31,22 @@ const Body = () => {
 
   //done or not done
   const doneTodoItemHandler = (id) => {
-    console.log(id);
     let payload = todos.map((todo) => {
       if (todo.id === id) {
         return { ...todo, done: !todo.done };
+      } else {
+        return { ...todo };
+      }
+    })
+    setTodos(payload);
+    localStorage.setItem('todos', JSON.stringify(payload));
+  };
+
+  //EDIT TEXT
+  const editTodoItemHandler = (id, text) => {
+    let payload = todos.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, text: text };
       } else {
         return { ...todo };
       }
@@ -49,10 +60,6 @@ const Body = () => {
     console.log(storagePayload);
     setTodos(storagePayload)
   },[])
-
-  // useEffect(() => {
-    // localStorage.setItem('todos', JSON.stringify(todos));
-  // }, [addTodoItemHandler, todos]);
 
   return (
     <div className="wrapper-body">
