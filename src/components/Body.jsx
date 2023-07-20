@@ -17,32 +17,42 @@ const Body = () => {
       };
 
       setTodos([...todos, newItem]);
-      console.log(newItem);
+      localStorage.setItem('todos', JSON.stringify([...todos, newItem]));
+      // console.log(newItem);
     },
     [todos]
   );
   // delete items from todos array by id
 
   let deleteItemHandler = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+    let payload = todos.filter((todo) => todo.id !== id)
+    setTodos(payload);
+    localStorage.setItem('todos', JSON.stringify(payload));
   };
 
   //done or not done
   const doneTodoItemHandler = (id) => {
-    setTodos(
-      todos.map((todo) => {
-        if (todo.id === id) {
-          return { ...todo, done: !todo.done };
-        } else {
-          return { ...todo };
-        }
-      })
-    );
+    console.log(id);
+    let payload = todos.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, done: !todo.done };
+      } else {
+        return { ...todo };
+      }
+    })
+    setTodos(payload);
+    localStorage.setItem('todos', JSON.stringify(payload));
   };
 
-  useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos));
-  }, [addTodoItemHandler, todos]);
+  useEffect(()=>{
+    let storagePayload = JSON.parse(localStorage.getItem('todos')) ?? []
+    console.log(storagePayload);
+    setTodos(storagePayload)
+  },[])
+
+  // useEffect(() => {
+    // localStorage.setItem('todos', JSON.stringify(todos));
+  // }, [addTodoItemHandler, todos]);
 
   return (
     <div className="wrapper-body">
