@@ -6,72 +6,70 @@ import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
 import { faObjectUngroup } from '@fortawesome/free-solid-svg-icons';
 
 const Header = () => {
-  let date = new Date();
-  let today = date.getDate();
-  let month = date.getMonth();
-  let week = date.getUTCDay();
-  let hr = date.getHours();
-  let min = date.getMinutes();
-  let sec = date.getSeconds();
+  const getFormattedDate = () => {
+    const date = new Date();
+    const today = date.getDate();
+    const month = date.getMonth();
+    const week = date.getUTCDay();
+    let hr = date.getHours();
+    let min = date.getMinutes();
+    let sec = date.getSeconds();
 
-  if (hr < 10) {
-    hr = '0' + hr;
-  }
+    if (hr < 10) {
+      hr = '0' + hr;
+    }
 
-  if (min < 10) {
-    min = '0' + min;
-  }
+    if (min < 10) {
+      min = '0' + min;
+    }
 
-  if (sec < 10) {
-    sec = '0' + sec;
-  }
+    if (sec < 10) {
+      sec = '0' + sec;
+    }
 
-  if (today < 10) {
-    today = '0' + today;
-  }
+    const weekDays = [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+    ];
 
-  let weekDays = [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    'Monday',
-  ];
+    const monthNames = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
 
-  let monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
+    const dayName = weekDays[week];
+    const monthName = monthNames[month];
 
-  let dayName = weekDays[week - 1];
+    return `${hr}:${min}:${sec} ${dayName}, ${monthName} ${today} `;
+  };
 
-  let monthName = monthNames[month];
-
-  let showDate = `${hr}:${min}:${sec} ${dayName}, ${monthName} ${today} `;
-
-  let [dateNew, setDate] = useState(showDate);
+  const [dateNew, setDate] = useState(getFormattedDate());
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setDate(showDate);
+      setDate(getFormattedDate());
     }, 1000);
 
     return () => {
       clearInterval(interval);
     };
-  });
+  }, []);
+
   return (
     <div className="wrapper-header">
       <div className="left-header">

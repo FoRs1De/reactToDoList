@@ -15,7 +15,7 @@ const Body = () => {
         done: false,
         id: uuid(),
       };
-      let payload = [...todos, newItem]
+      let payload = [...todos, newItem];
       setTodos(payload);
       localStoreFunk(payload);
     },
@@ -24,7 +24,7 @@ const Body = () => {
 
   // delete items from todos array by id
   let deleteItemHandler = (id) => {
-    let payload = todos.filter((todo) => todo.id !== id)
+    let payload = todos.filter((todo) => todo.id !== id);
     setTodos(payload);
     localStoreFunk(payload);
   };
@@ -37,7 +37,7 @@ const Body = () => {
       } else {
         return { ...todo };
       }
-    })
+    });
     setTodos(payload);
     localStoreFunk(payload);
   };
@@ -50,17 +50,18 @@ const Body = () => {
       } else {
         return { ...todo };
       }
-    })
+    });
     setTodos(payload);
     localStoreFunk(payload);
   };
 
-  const localStoreFunk = payload => localStorage.setItem('todos', JSON.stringify(payload));
+  const localStoreFunk = (payload) =>
+    localStorage.setItem('todos', JSON.stringify(payload));
 
-  useEffect(()=>{
-    let storagePayload = JSON.parse(localStorage.getItem('todos')) ?? []
-    setTodos(storagePayload)
-  },[])
+  useEffect(() => {
+    let storagePayload = JSON.parse(localStorage.getItem('todos')) ?? [];
+    setTodos(storagePayload);
+  }, []);
 
   return (
     <div className="wrapper-body">
@@ -69,6 +70,7 @@ const Body = () => {
         todos={todos}
         deleteItemHandler={deleteItemHandler}
         doneTodoItemHandler={doneTodoItemHandler}
+        editTodoItemHandler={editTodoItemHandler}
       ></ToDoList>
     </div>
   );

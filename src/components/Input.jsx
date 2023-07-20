@@ -4,10 +4,18 @@ import BottomInput from './BottomInput';
 // eslint-disable-next-line react/prop-types
 const Input = ({ addTodoItemHandler }) => {
   const [text, setText] = useState('');
+  let [warning, setWarning] = useState('');
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    addTodoItemHandler(text);
-    setText('');
+    if (document.querySelector('#txt').value.length > 0) {
+      addTodoItemHandler(text);
+      setText('');
+      setWarning('');
+    } else {
+      {
+        setWarning('Add a task!');
+      }
+    }
   };
   let [display, setDisplay] = useState(false);
   let show = () => {
@@ -34,7 +42,7 @@ const Input = ({ addTodoItemHandler }) => {
             onChange={(e) => setText(e.target.value)}
           />
         </div>
-        {display == true && <BottomInput />}
+        {display == true && <BottomInput warning={warning} />}
       </form>
     </div>
   );
